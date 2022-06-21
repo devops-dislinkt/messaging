@@ -4,9 +4,14 @@ eventlet.monkey_patch()
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO
 from create_app import create_app
+from flask_cors import CORS, cross_origin
 
 flask_app = create_app()
-socketio = SocketIO(flask_app, engineio_logger=False, async_mode="eventlet")
+cors = CORS(flask_app)
+flask_app.config['CORS_HEADERS'] = 'Content-Type'
+
+socketio = SocketIO(flask_app, engineio_logger=False, async_mode="eventlet", cors_allowed_origins='*', path="messages")
+
 
 username_to_sid = {}
 sid_to_username = {}
