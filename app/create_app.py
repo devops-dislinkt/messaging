@@ -1,15 +1,10 @@
 from flask import Flask
 
 
-
 def create_app():
     import config
-    # from routes import api
 
     flask_app = Flask(__name__)
     flask_app.config["SECRET_KEY"] = config.secret_key
-
-    # with flask_app.app_context():
-    #     flask_app.register_blueprint(api, url_prefix="/api")
 
     return flask_app
