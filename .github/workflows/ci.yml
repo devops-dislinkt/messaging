@@ -74,14 +74,6 @@ jobs:
           src: "."
           version: "22.3.0"
     #----------------------------------------------
-    #       run unit and integration tests
-    #----------------------------------------------
-      - name: Test with pytest
-        run: poetry run pytest
-        env:
-            FLASK_DATABASE_HOST: localhost
-            FLASK_SECRET_KEY: key
-    #----------------------------------------------
     #    get next version
     #----------------------------------------------
       - name: Determine next version
