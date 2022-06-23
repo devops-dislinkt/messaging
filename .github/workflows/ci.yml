@@ -77,10 +77,7 @@ jobs:
     #       run unit and integration tests
     #----------------------------------------------
       - name: Test with pytest
-        run: | 
-              poetry run coverage erase
-              poetry run coverage run --source=app -m pytest 
-              poetry run coverage xml
+        run: poetry run pytest
         env:
             FLASK_DATABASE_HOST: localhost
             FLASK_SECRET_KEY: key
