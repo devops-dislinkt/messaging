@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Flask_Chat_App</title>
+</head>
+<body>
+
+  <h3 style='color: #ccc;font-size: 30px;'>USER 1</h3>
+  <div class="message_holder"></div>
+
+  <form action="" method="POST">
+    <input type="text" class="message" placeholder="Messages"/>
+    <input type="submit"/>
+  </form>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js" integrity="sha512-9mpsATI0KClwt+xVZfbcf2lJ8IFBAwsubJ6mI3rtULwyM3fBmQFzj0It4tGqxLOGQwGfJdk/G+fANnxfq9/cew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script type="text/javascript">
+     let socket = io("ws://localhost:8080",  { path: '/messages'})
+
+    socket.on( 'connect', function() {
+      socket.emit( 'username', 'USERNAME 1' )
+      var form = $( 'form' ).on( 'submit', function( e ) {
+        e.preventDefault()
+        let user_input = $( 'input.message' ).val()
+        socket.emit( 'new-message', {
+          to_whom : 'USERNAME 2',
+          message : user_input
+        } )
+        $( 'input.message' ).val( '' ).focus()
+        $( 'div.message_holder' ).append( '<div><b style="color: 	#0000FF">'+ 'me: '+'</b> '+user_input+'</div>' )
+
+      } )
+    } )
+    socket.on( 'response', function( msg ) {
+      console.log( msg )
+      console.log(msg.from)
+      $( 'div.message_holder' ).append( '<div><b style="color: #000">'+msg.from+'</b> '+msg.value+'</div>' )
+    
+    })
+  </script>
+
+</body>
+</html>
